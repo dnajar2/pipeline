@@ -49,10 +49,10 @@ jobs:
       - run:
           name: Deply to AWS s3
           command: |
-            if [ "$(CIRCLE_BRANCH)" == "main" ]
+            if [ "${CIRCLE_BRANCH}" == "main" ]
             then
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_PROD} --delete
-            elif [ "$(CIRCLE_BRANCH)" == "staging" ]
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_STAGING} --delete
             else
@@ -87,10 +87,10 @@ jobs:
           name: Deply to AWS s3
           command: |
             aws configure set preview.cloudfront true
-            if [ "$(CIRCLE_BRANCH)" == "main" ]
+            if [ "${CIRCLE_BRANCH}" == "main" ]
             then
               aws cloudfront create-invalidation --distribution_id ${DISTRIBUTION_ID_PROD} --path /\*
-            elif [ "$(CIRCLE_BRANCH)" == "staging" ]
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
               aws cloudfront create-invalidation --distribution_id ${DISTRIBUTION_ID_STAGE} --path /\*
             else
